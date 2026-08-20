@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khảo Sát Tinh Thần Học Sinh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#EEF3EA;
+    --surface:#FFFFFF;
+    --ink:#223027;
+    --ink-soft:#5B6B62;
+    --sage:#4F7A63;
+    --sage-dark:#375745;
+    --amber:#DFA13B;
+    --line:#DCE5D9;
+    --radius:16px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.display{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;letter-spacing:-0.01em;}
+  .wrap{max-width:720px;margin:0 auto;padding:28px 20px 80px;}
+
+  /* Header + sprout progress */
+  header{text-align:center;margin-bottom:6px;}
+  .eyebrow{font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-dark);opacity:.75;}
+  h1{font-size:30px;margin:6px 0 8px;color:var(--sage-dark);}
+  .lede{color:var(--ink-soft);font-size:14.5px;line-height:1.55;max-width:520px;margin:0 auto 26px;}
+
+  .sprout{display:flex;justify-content:center;gap:10px;margin-bottom:30px;}
+  .leaf{width:12px;height:12px;border-radius:50%;background:var(--line);transition:all .35s ease;}
+  .leaf.done{background:var(--sage);}
+  .leaf.current{background:var(--amber);transform:scale(1.35);}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;box-shadow:0 1px 2px rgba(34,48,39,.04), 0 8px 24px -12px rgba(34,48,39,.10);}
+  .step-title{font-size:20px;color:var(--sage-dark);margin:0 0 4px;}
+  .step-sub{color:var(--ink-soft);font-size:13.5px;margin:0 0 24px;line-height:1.5;}
+
+  .field{margin-bottom:20px;}
+  .field:last-child{margin-bottom:0;}
+  label.q{display:block;font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:9px;line-height:1.45;}
+  .q .num{color:var(--sage);margin-right:6px;font-family:'Be Vietnam Pro',sans-serif;}
+  input[type=text], input[type=date], textarea{
+    width:100%;border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;font:inherit;font-size:14.5px;color:var(--ink);background:#FBFCFA;transition:border-color .15s;
+  }
+  input[type=text]:focus, input[type=date]:focus, textarea:focus{outline:none;border-color:var(--sage);background:#fff;}
+  textarea{resize:vertical;min-height:64px;}
+
+  .pillrow{display:flex;gap:10px;flex-wrap:wrap;}
+  .pill{position:relative;}
+  .pill input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;}
+  .pill span{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1.5px solid var(--line);border-radius:999px;font-size:13.5px;color:var(--ink-soft);background:#FBFCFA;transition:all .15s;cursor:pointer;}
+  .pill input:checked + span{background:var(--sage);border-color:var(--sage);color:#fff;font-weight:600;}
+  .pill input:focus-visible + span{outline:2px solid var(--amber);outline-offset:2px;}
+
+  .likert-head{display:flex;justify-content:flex-end;gap:0;margin:0 0 10px;padding-right:2px;}
+  .likert-head span{width:76px;text-align:center;font-size:10.5px;color:var(--ink-soft);line-height:1.3;}
+  .likert-row{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-top:1px solid var(--line);}
+  .likert-row:first-of-type{border-top:none;padding-top:0;}
+  .likert-text{flex:1;font-size:14px;line-height:1.5;padding-top:6px;}
+  .likert-opts{display:flex;gap:0;flex-shrink:0;}
+  .likert-opt{width:76px;display:flex;justify-content:center;}
+  .likert-opt label{position:relative;width:26px;height:26px;display:block;cursor:pointer;}
+  .likert-opt input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;}
+  .likert-opt .dot{position:absolute;inset:0;border:1.5px solid var(--line);border-radius:50%;background:#FBFCFA;transition:all .15s;}
+  .likert-opt input:checked + .dot{background:var(--sage);border-color:var(--sage);}
+  .likert-opt input:checked + .dot::after{content:'';position:absolute;inset:7px;background:#fff;border-radius:50%;}
+  .likert-opt input:focus-visible + .dot{outline:2px solid var(--amber);outline-offset:2px;}
+
+  .choice-list{display:flex;flex-direction:column;gap:8px;}
+  .choice{position:relative;}
+  .choice input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;}
+  .choice label{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:14px;color:var(--ink);background:#FBFCFA;transition:all .15s;cursor:pointer;}
+  .choice input:checked + label{border-color:var(--sage);background:#EFF5F1;font-weight:600;}
+  .choice .box{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line);flex-shrink:0;position:relative;}
+  .choice input:checked + label .box{background:var(--sage);border-color:var(--sage);}
+  .choice input:checked + label .box::after{content:'';position:absolute;left:4.5px;top:1.5px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(40deg);}
+
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px;}
+  button{font:inherit;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:14px;border-radius:999px;border:none;cursor:pointer;padding:12px 24px;transition:all .15s;}
+  .btn-primary{background:var(--sage);color:#fff;}
+  .btn-primary:hover{background:var(--sage-dark);}
+  .btn-ghost{background:transparent;color:var(--ink-soft);}
+  .btn-ghost:hover{color:var(--ink);}
+  .btn-primary:disabled{opacity:.5;cursor:not-allowed;}
+
+  .step{display:none;}
+  .step.active{display:block;animation:rise .35s ease;}
+  @keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  .done-screen{text-align:center;padding:20px 4px;}
+  .done-screen .sprout-big{margin:0 auto 18px;width:64px;height:64px;}
+  .done-screen h2{color:var(--sage-dark);margin-bottom:8px;}
+  .done-screen p{color:var(--ink-soft);font-size:14.5px;line-height:1.6;}
+  .note{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:16px;}
+  .error-box{background:#FBEEE6;border:1px solid #EBC9A6;color:#8A5A2B;font-size:13px;padding:12px 14px;border-radius:10px;margin-top:16px;}
+  .radio-inline{display:flex;gap:10px;}
+
+  @media (max-width:480px){
+    .card{padding:24px 18px;}
+    .likert-head span, .likert-opt{width:52px;}
+    .likert-text{font-size:13.5px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Dành cho học sinh THCS</div>
+    <h1>Khảo Sát Tinh Thần Học Sinh</h1>
+    <p class="lede">Không có câu trả lời đúng hay sai — hãy trả lời thật với cảm nhận của bạn. Thông tin của bạn chỉ dùng để tìm hiểu và hỗ trợ tốt hơn cho việc học.</p>
+  </header>
+
+  <div class="sprout" id="sprout"></div>
+
+  <form class="card" id="surveyForm" novalidate>
+    <!-- Step 0: Thông tin cá nhân -->
+    <div class="step active" data-step="0">
+      <h2 class="step-title">Thông tin cá nhân</h2>
+      <p class="step-sub">Vài thông tin cơ bản để bắt đầu.</p>
+
+      <div class="field">
+        <label class="q" for="hoten">Họ và tên</label>
+        <input type="text" id="hoten" name="Họ và tên" required>
+      </div>
+      <div class="field">
+        <label class="q">Giới tính</label>
+        <div class="pillrow">
+          <label class="pill"><input type="radio" name="Giới tính" value="Nam" required><span>Nam</span></label>
+          <label class="pill"><input type="radio" name="Giới tính" value="Nữ"><span>Nữ</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q" for="lop">Lớp</label>
+        <input type="text" id="lop" name="Lớp" required>
+      </div>
+      <div class="field">
+        <label class="q" for="ngaysinh">Ngày sinh</label>
+        <input type="date" id="ngaysinh" name="Ngày sinh">
+      </div>
+    </div>
+
+    <!-- Step 1: 4 câu hỏi cá nhân -->
+    <div class="step" data-step="1">
+      <h2 class="step-title">Về việc học của bạn</h2>
+      <p class="step-sub">Phần I — tiếp theo.</p>
+
+      <div class="field">
+        <label class="q"><span class="num">1.</span>Bạn thích học những môn nào?</label>
+        <textarea name="Môn học yêu thích"></textarea>
+      </div>
+      <div class="field">
+        <label class="q"><span class="num">2.</span>Bạn học bao nhiêu tiếng 1 ngày? Thời gian học có làm bạn áp lực không?</label>
+        <textarea name="Thời gian học và áp lực"></textarea>
+      </div>
+      <div class="field">
+        <label class="q"><span class="num">3.</span>Bạn hãy tự đánh giá kết quả học tập của mình</label>
+        <div class="pillrow">
+          <label class="pill"><input type="radio" name="Tự đánh giá kết quả" value="Tốt"><span>Tốt</span></label>
+          <label class="pill"><input type="radio" name="Tự đánh giá kết quả" value="Khá"><span>Khá</span></label>
+          <label class="pill"><input type="radio" name="Tự đánh giá kết quả" value="Chưa tốt"><span>Chưa tốt</span></label>
+        </div>
+      </div>
+      <div class="field">
+        <label class="q"><span class="num">4.</span>Bạn muốn bản thân cải thiện về kết quả học của môn nào?</label>
+        <textarea name="Môn muốn cải thiện"></textarea>
+      </div>
+    </div>
+
+    <!-- Step 2: Phần 1 -->
+    <div class="step" data-step="2">
+      <h2 class="step-title">Phần 1</h2>
+      <p class="step-sub">Ảnh hưởng của việc học tập đến tinh thần học sinh. 1 = Hoàn toàn không đúng · 2 = Đúng một phần · 3 = Hoàn toàn đúng.</p>
+      <div class="likert-head"><span>1</span><span>2</span><span>3</span></div>
+      <div id="phan1-likert"></div>
+      <div class="field" style="margin-top:20px;">
+        <label class="q">Khi cảm thấy buồn hoặc áp lực vì học tập, bạn thường làm gì để giải tỏa cảm xúc?</label>
+        <textarea name="Cách giải tỏa cảm xúc"></textarea>
+      </div>
+    </div>
+
+    <!-- Step 3: Phần 2 -->
+    <div class="step" data-step="3">
+      <h2 class="step-title">Phần 2</h2>
+      <p class="step-sub">Kết quả học tập ảnh hưởng đến cá nhân, gia đình và thầy cô.</p>
+      <div class="likert-head"><span>1</span><span>2</span><span>3</span></div>
+      <div id="phan2-likert"></div>
+
+      <div class="field" style="margin-top:20px;">
+        <label class="q">Khi kết quả học tập không như mong đợi trong một thời gian dài, cảm xúc và thái độ học tập của bạn thay đổi như thế nào?</label>
+        <textarea name="Thay đổi cảm xúc thái độ"></textarea>
+      </div>
+      <div class="field">
+        <label class="q">Kết quả học tập ảnh hưởng như thế nào đến mối quan hệ giữa bạn với ba mẹ?</label>
+        <div class="choice-list" id="quanhe-bame"></div>
+      </div>
+      <div class="field">
+        <label class="q">Kết quả học tập ảnh hưởng như thế nào đến mối quan hệ giữa bạn với thầy cô?</label>
+        <div class="choice-list" id="quanhe-thayco"></div>
+      </div>
+    </div>
+
+    <!-- Step 4: Phần 3 -->
+    <div class="step" data-step="4">
+      <h2 class="step-title">Phần 3</h2>
+      <p class="step-sub">Vai trò của AI đối với học sinh trong học tập và giải trí.</p>
+      <div class="likert-head"><span>1</span><span>2</span><span>3</span></div>
+      <div id="phan3-likert"></div>
+
+      <div class="field" style="margin-top:20px;">
+        <label class="q">Bạn thường sử dụng công cụ AI nào để hỗ trợ việc học tập? AI có giúp ích gì cho việc học của bạn (hãy nêu những lợi ích)?</label>
+        <textarea name="Công cụ AI và lợi ích"></textarea>
+      </div>
+      <div class="field">
+        <label class="q">Trung bình, bạn sử dụng AI khoảng bao nhiêu % khi làm bài tập?</label>
+        <div class="choice-list" id="ai-phantram"></div>
+      </div>
+      <div class="field">
+        <label class="q">Theo bạn, nếu sử dụng 100% AI để làm hoàn toàn thay mình thì có giúp học sinh học giỏi hơn không?</label>
+        <div class="choice-list" id="ai-100phantram"></div>
+      </div>
+      <div class="field">
+        <label class="q">Theo bạn, sử dụng AI như thế nào thì hiệu quả trong học tập?</label>
+        <textarea name="Cách dùng AI hiệu quả"></textarea>
+      </div>
+    </div>
+
+    <!-- Step 5: Phần 4 -->
+    <div class="step" data-step="5">
+      <h2 class="step-title">Phần 4</h2>
+      <p class="step-sub">Vai trò của việc học hỏi từ các bạn học tốt.</p>
+
+      <div class="field">
+        <label class="q"><span class="num">1.</span>Bạn có mong muốn tìm hiểu những phương pháp học tập hiệu quả được các bạn học sinh có thành tích học tập tốt áp dụng không?</label>
+        <div class="choice-list" id="q4-1"></div>
+      </div>
+      <div class="field">
+        <label class="q"><span class="num">2.</span>Bạn có thường học hỏi, tham khảo cách ghi nhớ bài, lập kế hoạch học tập hoặc giải quyết bài khó từ những bạn học tốt không?</label>
+        <div class="choice-list" id="q4-2"></div>
+      </div>
+      <div class="field">
+        <label class="q"><span class="num">3.</span>Theo bạn, việc chia sẻ "bí quyết học tập" và kinh nghiệm thực tế từ những học sinh học tốt có thể giúp các bạn khác cải thiện kết quả học tập không?</label>
+        <div class="choice-list" id="q4-3"></div>
+      </div>
+      <div class="field">
+        <label class="q"><span class="num">4.</span>Nếu có một mô hình/ứng dụng giúp học sinh chia sẻ phương pháp học tập, mẹo ghi nhớ, cách quản lý thời gian và kinh nghiệm ôn thi, bạn có sẵn sàng tham gia không?</label>
+        <div class="choice-list" id="q4-4"></div>
+      </div>
+      <div class="field">
+        <label class="q"><span class="num">5.</span>Bạn muốn học hỏi điều gì nhất từ những bạn có phương pháp học tập hiệu quả?</label>
+        <div class="choice-list" id="q4-5"></div>
+        <input type="text" style="margin-top:8px;" placeholder="Khác (nếu có)..." name="Khác - điều muốn học hỏi">
+      </div>
+      <div class="field">
+        <label class="q">Là một học sinh THCS, bạn nghĩ mình cần chủ động học tập và ứng dụng AI như thế nào để đạt hiệu quả tốt nhất?</label>
+        <textarea name="Chủ động học tập và AI"></textarea>
+      </div>
+      <div class="field">
+        <label class="q">Bạn muốn thay đổi điều gì trong quá trình học tập để việc học trở nên nhẹ nhàng và hiệu quả hơn?</label>
+        <textarea name="Điều muốn thay đổi"></textarea>
+      </div>
+    </div>
+
+    <!-- Step 6: Xác nhận -->
+    <div class="step" data-step="6">
+      <div class="done-screen" id="preSubmit">
+        <h2 class="step-title" style="text-align:center;">Sẵn sàng gửi khảo sát</h2>
+        <p class="step-sub" style="text-align:center;">Bạn đã hoàn thành tất cả các phần. Nhấn "Gửi khảo sát" để hoàn tất — cảm ơn bạn đã dành thời gian chia sẻ thật lòng!</p>
+      </div>
+      <div class="done-screen" id="afterSubmit" style="display:none;">
+        <svg class="sprout-big" viewBox="0 0 64 64" fill="none"><path d="M32 58V30" stroke="#4F7A63" stroke-width="3" stroke-linecap="round"/><path d="M32 30C32 30 14 30 14 14C30 14 32 30 32 30Z" fill="#4F7A63"/><path d="M32 22C32 22 50 22 50 8C36 8 32 22 32 22Z" fill="#DFA13B"/></svg>
+        <h2>Đã gửi thành công!</h2>
+        <p>Cảm ơn bạn đã làm bài khảo sát. Câu trả lời của bạn đã được ghi nhận.</p>
+      </div>
+      <div class="error-box" id="errorBox" style="display:none;"></div>
+    </div>
+
+    <div class="nav">
+      <button type="button" class="btn-ghost" id="btnBack">← Quay lại</button>
+      <button type="button" class="btn-primary" id="btnNext">Tiếp tục →</button>
+      <button type="submit" class="btn-primary" id="btnSubmit" style="display:none;">Gửi khảo sát</button>
+    </div>
+  </form>
+  <p class="note">Hết! Cảm ơn vì đã làm bài khảo sát 🌱</p>
+</div>
+
+<script>
+/* ============ CONFIG ============ */
+// Kết quả khảo sát sẽ được gửi đến: nguyenphuc17122011@gmail.com
+// LƯU Ý QUAN TRỌNG: lần ĐẦU TIÊN có người nộp bài, Formspree sẽ gửi 1 email
+// xác nhận đến nguyenphuc17122011@gmail.com — cần mở email đó và bấm "Confirm"
+// thì các lượt nộp sau mới tự động vào hộp thư. Trước khi xác nhận, bấm "Gửi
+// khảo sát" cũng sẽ báo thành công nhưng email sẽ không tới cho đến khi xác nhận.
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xppabzep";
+/* ================================================================= */
+
+const LIKERT_LABEL = "1 = Hoàn toàn không đúng · 2 = Đúng một phần · 3 = Hoàn toàn đúng";
+
+const phan1Items = [
+  "Bạn cảm thấy bản thân vô dụng khi điểm thấp.",
+  "Bạn căng thẳng vì việc học.",
+  "Bạn hay bất đồng với ba mẹ về vấn đề học tập.",
+  "Bạn cảm thấy các tiết học dần trở nên nhàm chán.",
+  "Bạn muốn điểm cao để được người khác công nhận.",
+  "Bạn vẫn tiếp tục học mặc dù bản thân rất mệt.",
+  "Bạn thấy bản thân không có thời gian nghỉ ngơi.",
+  "Bạn hay khóc khi đã cố gắng học nhưng kết quả kiểm tra thấp hơn mong đợi.",
+  "Bạn cảm thấy mình kém cỏi khi kết quả học tập không như mong đợi.",
+  "Bạn khó có thể thư giãn sau mỗi buổi học.",
+  "Bạn muốn có người tâm sự, lắng nghe khi gặp áp lực học tập."
+];
+const phan2Items = ["Bạn nghĩ điểm số thể hiện được giá trị của bản thân."];
+const phan3Items = [
+  "Bạn cảm thấy thích thú khi sử dụng các công cụ trí tuệ nhân tạo AI trong học tập.",
+  "Bạn thường dùng các trò chơi của trí tuệ nhân tạo AI để thư giãn.",
+  "Bạn đã dần quen sử dụng AI trong cuộc sống hằng ngày.",
+  "Bạn sử dụng AI để cập nhật các tin tức.",
+  "AI giúp việc học của bạn trở nên hiệu quả hơn."
+];
+
+function renderLikert(containerId, items, namePrefix){
+  const el = document.getElementById(containerId);
+  el.innerHTML = items.map((text, i) => `
+    <div class="likert-row">
+      <div class="likert-text">${text}</div>
+      <div class="likert-opts">
+        ${[1,2,3].map(v => `
+          <div class="likert-opt">
+            <label>
+              <input type="radio" name="${namePrefix} - Câu ${i+1}" value="${v}">
+              <span class="dot"></span>
+            </label>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+renderLikert('phan1-likert', phan1Items, 'Phần 1');
+renderLikert('phan2-likert', phan2Items, 'Phần 2');
+renderLikert('phan3-likert', phan3Items, 'Phần 3');
+
+function renderChoices(containerId, name, options){
+  const el = document.getElementById(containerId);
+  el.innerHTML = options.map((opt, i) => `
+    <div class="choice">
+      <input type="radio" name="${name}" value="${opt}" id="${containerId}-${i}">
+      <label for="${containerId}-${i}"><span class="box"></span>${opt}</label>
+    </div>`).join('');
+}
+renderChoices('quanhe-bame', 'Ảnh hưởng đến quan hệ với ba mẹ', ["Tích cực hơn","Không thay đổi","Căng thẳng hơn"]);
+renderChoices('quanhe-thayco', 'Ảnh hưởng đến quan hệ với thầy cô', ["Tích cực hơn","Không thay đổi","Căng thẳng hơn"]);
+renderChoices('ai-phantram', '% dùng AI khi làm bài tập', ["Dưới 25%","25% - 50%","50% - 75%","Trên 75%"]);
+renderChoices('ai-100phantram', 'Dùng 100% AI có giúp học giỏi hơn', ["Có","Không","Không chắc chắn"]);
+renderChoices('q4-1', 'Muốn tìm hiểu phương pháp học từ bạn giỏi', ["Rất muốn","Muốn","Bình thường","Không muốn"]);
+renderChoices('q4-2', 'Tần suất tham khảo cách học từ bạn giỏi', ["Thường xuyên","Thỉnh thoảng","Hiếm khi","Chưa bao giờ"]);
+renderChoices('q4-3', 'Hiệu quả của chia sẻ bí quyết học tập', ["Rất hiệu quả","Khá hiệu quả","Ít hiệu quả","Không hiệu quả"]);
+renderChoices('q4-4', 'Sẵn sàng tham gia mô hình chia sẻ học tập', ["Rất sẵn sàng","Sẵn sàng","Còn phân vân","Không muốn tham gia"]);
+renderChoices('q4-5', 'Điều muốn học hỏi nhất', ["Cách lập kế hoạch và quản lý thời gian","Cách ghi nhớ kiến thức","Cách tự học","Cách ôn tập trước kiểm tra/thi","Cách vượt qua môn học khó","Cách sử dụng AI/công nghệ để hỗ trợ học tập"]);
+
+/* ---------- Wizard logic ---------- */
+const steps = Array.from(document.querySelectorAll('.step'));
+let current = 0;
+const sproutEl = document.getElementById('sprout');
+sproutEl.innerHTML = steps.map((_,i) => `<div class="leaf" data-i="${i}"></div>`).join('');
+const leaves = Array.from(sproutEl.querySelectorAll('.leaf'));
+
+function updateSprout(){
+  leaves.forEach((l,i) => {
+    l.classList.toggle('done', i < current);
+    l.classList.toggle('current', i === current);
+  });
+}
+function showStep(i){
+  steps.forEach(s => s.classList.toggle('active', Number(s.dataset.step) === i));
+  document.getElementById('btnBack').style.visibility = i === 0 ? 'hidden' : 'visible';
+  document.getElementById('btnNext').style.display = i === steps.length - 1 ? 'none' : 'inline-block';
+  document.getElementById('btnSubmit').style.display = i === steps.length - 1 ? 'inline-block' : 'none';
+  updateSprout();
+  document.getElementById('surveyForm').scrollIntoView({behavior:'smooth', block:'start'});
+}
+document.getElementById('btnNext').addEventListener('click', () => {
+  if(current === 0){
+    const name = document.getElementById('hoten').value.trim();
+    const lop = document.getElementById('lop').value.trim();
+    if(!name || !lop){
+      alert('Vui lòng nhập họ tên và lớp trước khi tiếp tục.');
+      return;
+    }
+  }
+  if(current < steps.length - 1){ current++; showStep(current); }
+});
+document.getElementById('btnBack').addEventListener('click', () => {
+  if(current > 0){ current--; showStep(current); }
+});
+showStep(0);
+
+/* ---------- Submit ---------- */
+document.getElementById('surveyForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const errorBox = document.getElementById('errorBox');
+  errorBox.style.display = 'none';
+  const submitBtn = document.getElementById('btnSubmit');
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Đang gửi...';
+
+  const formData = new FormData(document.getElementById('surveyForm'));
+  formData.append('_subject', 'Kết quả Khảo Sát Tinh Thần Học Sinh - ' + (formData.get('Họ và tên') || ''));
+
+  try{
+    if(!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')){
+      throw new Error('CHUA_CAU_HINH');
+    }
+    const res = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    });
+    if(!res.ok) throw new Error('LOI_GUI');
+
+    document.getElementById('preSubmit').style.display = 'none';
+    document.getElementById('afterSubmit').style.display = 'block';
+    document.querySelector('.nav').style.display = 'none';
+  }catch(err){
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Gửi khảo sát';
+    if(err.message === 'CHUA_CAU_HINH'){
+      errorBox.textContent = 'Trang khảo sát chưa được kết nối với email — người tạo khảo sát cần dán "Form endpoint" từ Formspree vào FORMSPREE_ENDPOINT trong mã nguồn.';
+    } else {
+      errorBox.textContent = 'Có lỗi khi gửi khảo sát. Vui lòng kiểm tra kết nối mạng và thử lại.';
+    }
+    errorBox.style.display = 'block';
+  }
+});
+</script>
+</body>
+</html>
