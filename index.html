@@ -2,436 +2,436 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f7f8f5">
 <title>Khảo Sát Tinh Thần Học Sinh</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#EEF3EA;
-    --surface:#FFFFFF;
-    --ink:#223027;
-    --ink-soft:#5B6B62;
-    --sage:#4F7A63;
-    --sage-dark:#375745;
-    --amber:#DFA13B;
-    --line:#DCE5D9;
-    --radius:16px;
-  }
-  *{box-sizing:border-box;}
-  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
-  h1,h2,h3,.display{font-family:'Be Vietnam Pro',sans-serif;font-weight:800;letter-spacing:-0.01em;}
-  .wrap{max-width:720px;margin:0 auto;padding:28px 20px 80px;}
-
-  /* Header + sprout progress */
-  header{text-align:center;margin-bottom:6px;}
-  .eyebrow{font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage-dark);opacity:.75;}
-  h1{font-size:30px;margin:6px 0 8px;color:var(--sage-dark);}
-  .lede{color:var(--ink-soft);font-size:14.5px;line-height:1.55;max-width:520px;margin:0 auto 26px;}
-
-  .sprout{display:flex;justify-content:center;gap:10px;margin-bottom:30px;}
-  .leaf{width:12px;height:12px;border-radius:50%;background:var(--line);transition:all .35s ease;}
-  .leaf.done{background:var(--sage);}
-  .leaf.current{background:var(--amber);transform:scale(1.35);}
-
-  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:30px 28px;box-shadow:0 1px 2px rgba(34,48,39,.04), 0 8px 24px -12px rgba(34,48,39,.10);}
-  .step-title{font-size:20px;color:var(--sage-dark);margin:0 0 4px;}
-  .step-sub{color:var(--ink-soft);font-size:13.5px;margin:0 0 24px;line-height:1.5;}
-
-  .field{margin-bottom:20px;}
-  .field:last-child{margin-bottom:0;}
-  label.q{display:block;font-size:14.5px;font-weight:600;color:var(--ink);margin-bottom:9px;line-height:1.45;}
-  .q .num{color:var(--sage);margin-right:6px;font-family:'Be Vietnam Pro',sans-serif;}
-  input[type=text], input[type=date], textarea{
-    width:100%;border:1.5px solid var(--line);border-radius:10px;padding:11px 13px;font:inherit;font-size:14.5px;color:var(--ink);background:#FBFCFA;transition:border-color .15s;
-  }
-  input[type=text]:focus, input[type=date]:focus, textarea:focus{outline:none;border-color:var(--sage);background:#fff;}
-  textarea{resize:vertical;min-height:64px;}
-
-  .pillrow{display:flex;gap:10px;flex-wrap:wrap;}
-  .pill{position:relative;}
-  .pill input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;}
-  .pill span{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:1.5px solid var(--line);border-radius:999px;font-size:13.5px;color:var(--ink-soft);background:#FBFCFA;transition:all .15s;cursor:pointer;}
-  .pill input:checked + span{background:var(--sage);border-color:var(--sage);color:#fff;font-weight:600;}
-  .pill input:focus-visible + span{outline:2px solid var(--amber);outline-offset:2px;}
-
-  .likert-head{display:flex;justify-content:flex-end;gap:0;margin:0 0 10px;padding-right:2px;}
-  .likert-head span{width:76px;text-align:center;font-size:10.5px;color:var(--ink-soft);line-height:1.3;}
-  .likert-row{display:flex;align-items:flex-start;gap:12px;padding:13px 0;border-top:1px solid var(--line);}
-  .likert-row:first-of-type{border-top:none;padding-top:0;}
-  .likert-text{flex:1;font-size:14px;line-height:1.5;padding-top:6px;}
-  .likert-opts{display:flex;gap:0;flex-shrink:0;}
-  .likert-opt{width:76px;display:flex;justify-content:center;}
-  .likert-opt label{position:relative;width:26px;height:26px;display:block;cursor:pointer;}
-  .likert-opt input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;}
-  .likert-opt .dot{position:absolute;inset:0;border:1.5px solid var(--line);border-radius:50%;background:#FBFCFA;transition:all .15s;}
-  .likert-opt input:checked + .dot{background:var(--sage);border-color:var(--sage);}
-  .likert-opt input:checked + .dot::after{content:'';position:absolute;inset:7px;background:#fff;border-radius:50%;}
-  .likert-opt input:focus-visible + .dot{outline:2px solid var(--amber);outline-offset:2px;}
-
-  .choice-list{display:flex;flex-direction:column;gap:8px;}
-  .choice{position:relative;}
-  .choice input{position:absolute;opacity:0;width:100%;height:100%;cursor:pointer;margin:0;}
-  .choice label{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1.5px solid var(--line);border-radius:10px;font-size:14px;color:var(--ink);background:#FBFCFA;transition:all .15s;cursor:pointer;}
-  .choice input:checked + label{border-color:var(--sage);background:#EFF5F1;font-weight:600;}
-  .choice .box{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line);flex-shrink:0;position:relative;}
-  .choice input:checked + label .box{background:var(--sage);border-color:var(--sage);}
-  .choice input:checked + label .box::after{content:'';position:absolute;left:4.5px;top:1.5px;width:4px;height:8px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(40deg);}
-
-  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:26px;}
-  button{font:inherit;font-family:'Be Vietnam Pro',sans-serif;font-weight:700;font-size:14px;border-radius:999px;border:none;cursor:pointer;padding:12px 24px;transition:all .15s;}
-  .btn-primary{background:var(--sage);color:#fff;}
-  .btn-primary:hover{background:var(--sage-dark);}
-  .btn-ghost{background:transparent;color:var(--ink-soft);}
-  .btn-ghost:hover{color:var(--ink);}
-  .btn-primary:disabled{opacity:.5;cursor:not-allowed;}
-
-  .step{display:none;}
-  .step.active{display:block;animation:rise .35s ease;}
-  @keyframes rise{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-
-  .done-screen{text-align:center;padding:20px 4px;}
-  .done-screen .sprout-big{margin:0 auto 18px;width:64px;height:64px;}
-  .done-screen h2{color:var(--sage-dark);margin-bottom:8px;}
-  .done-screen p{color:var(--ink-soft);font-size:14.5px;line-height:1.6;}
-  .note{font-size:12.5px;color:var(--ink-soft);text-align:center;margin-top:16px;}
-  .error-box{background:#FBEEE6;border:1px solid #EBC9A6;color:#8A5A2B;font-size:13px;padding:12px 14px;border-radius:10px;margin-top:16px;}
-  .radio-inline{display:flex;gap:10px;}
-
-  @media (max-width:480px){
-    .card{padding:24px 18px;}
-    .likert-head span, .likert-opt{width:52px;}
-    .likert-text{font-size:13.5px;}
-  }
+:root{
+  --green:#4d7a5e; --green-dark:#3d6350; --bg:#eef1ea; --card:#fbfcf9;
+  --tile:#f4f6f0; --tile-sel:#e9f1ea; --border:#d7e0d4; --text:#243229;
+  --muted:#71806f; --danger:#b3554d;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+header{position:sticky;top:0;z-index:30}
+.topbar{height:56px;background:#f7f8f5ee;backdrop-filter:blur(8px);display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--border)}
+.topbar h1{flex:1;text-align:center;font-size:18px;margin:0}
+.icon-btn{background:none;border:none;font-size:26px;color:var(--text);cursor:pointer;padding:4px 8px}
+.dots{font-weight:700;letter-spacing:2px;color:var(--text)}
+.progress{height:6px;background:#dfe5da}
+.progress-fill{height:100%;width:0;background:var(--green);transition:.3s}
+main{max-width:760px;margin:0 auto;padding:0 12px 40px}
+.card{background:var(--card);border-radius:20px;padding:20px 16px;margin:16px 0;box-shadow:0 1px 2px #0001}
+.step{display:none}.step.active{display:block}
+.stepmeta{color:var(--muted);font-size:13px;margin:14px 4px 0}
+h2{font-size:19px;margin:4px 0 2px}
+.sub{color:var(--muted);font-size:14px;margin:0 0 12px;line-height:1.5}
+.note{background:var(--tile-sel);border:1px dashed var(--green);color:var(--green-dark);border-radius:12px;padding:10px 12px;font-size:13.5px;margin:10px 0;line-height:1.5}
+.q{font-size:15.5px;font-weight:600;line-height:1.45;margin:0 0 10px}
+.q .num{color:var(--green)}
+.hint{color:var(--muted);font-weight:400;font-size:12.5px}
+.field{margin:18px 0}
+.field.missing{outline:2px solid var(--danger);outline-offset:8px;border-radius:10px}
+.option{display:flex;gap:12px;align-items:flex-start;padding:14px;border:1.5px solid var(--border);border-radius:14px;background:var(--tile);cursor:pointer;margin:8px 0;font-size:15px;line-height:1.4;transition:.15s}
+.option input{position:absolute;opacity:0;pointer-events:none}
+.box{width:22px;height:22px;border:2px solid var(--border);border-radius:7px;background:#fff;flex:none;margin-top:1px;position:relative;transition:.15s}
+.option.selected{border-color:var(--green);background:var(--tile-sel)}
+.option.selected .box{background:var(--green);border-color:var(--green)}
+.option.selected .box::after{content:"";position:absolute;left:6px;top:3px;width:5px;height:10px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:9px 14px;border:1.5px solid var(--border);border-radius:999px;background:var(--tile);cursor:pointer;font-size:14px;transition:.15s}
+.chip input{position:absolute;opacity:0;pointer-events:none}
+.chip.selected{background:var(--green);border-color:var(--green);color:#fff}
+textarea,input[type=text]{width:100%;border:1.5px solid var(--border);border-radius:14px;background:var(--tile);padding:12px;font:inherit;font-size:15px;color:var(--text);resize:vertical}
+textarea:focus,input[type=text]:focus{outline:2px solid var(--green);border-color:var(--green)}
+.legend{position:sticky;top:62px;z-index:20;background:var(--bg);padding:8px 4px;font-size:12.5px;color:var(--muted);border-bottom:1px solid var(--border)}
+.scale-head,.scale-row{display:grid;grid-template-columns:1fr repeat(3,52px);align-items:center}
+.scale-head{color:var(--muted);font-weight:600;text-align:center}
+.scale-head span:first-child{text-align:left}
+.scale-row{padding:14px 0;border-bottom:1px solid var(--border)}
+.scale-row p{margin:0;font-size:15px;line-height:1.45}
+.sc{display:flex;justify-content:center;cursor:pointer}
+.sc input{position:absolute;opacity:0;pointer-events:none}
+.dot{width:30px;height:30px;border:2px solid var(--border);border-radius:50%;background:#fff;position:relative;transition:.15s}
+.sc input:checked + .dot{background:var(--green);border-color:var(--green)}
+.sc input:checked + .dot::after{content:"";position:absolute;inset:0;margin:auto;width:9px;height:9px;border-radius:50%;background:#fff}
+.stepper{display:flex;align-items:center;gap:14px}
+.stepper button{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--border);background:var(--tile);font-size:22px;color:var(--green-dark);cursor:pointer}
+.stepper b{font-size:20px;min-width:70px;text-align:center}
+input[type=range]{width:100%;accent-color:var(--green)}
+.range-out{font-weight:700;color:var(--green-dark)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:20px 0 4px}
+.btn-primary{background:var(--green);color:#fff;border:none;border-radius:999px;padding:15px 28px;font-size:16px;font-weight:700;cursor:pointer}
+.btn-primary:active{background:var(--green-dark)}
+.btn-ghost{background:none;border:none;color:var(--muted);font-weight:600;font-size:15px;cursor:pointer;padding:10px}
+#toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--green-dark);color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:86vw;text-align:center}
+#toast.show{opacity:1}
+.endnote{text-align:center;color:var(--muted);padding:18px 0 8px}
+#success{display:none;text-align:center;padding:40px 20px}
+#success.show{display:block}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <header>
-    <div class="eyebrow">Dành cho học sinh THCS</div>
+<header>
+  <div class="topbar">
+    <button class="icon-btn" onclick="prev()">‹</button>
     <h1>Khảo Sát Tinh Thần Học Sinh</h1>
-    <p class="lede">Không có câu trả lời đúng hay sai — hãy trả lời thật với cảm nhận của bạn. Thông tin của bạn chỉ dùng để tìm hiểu và hỗ trợ tốt hơn cho việc học.</p>
-  </header>
+    <span class="dots">•••</span>
+  </div>
+  <div class="progress"><div class="progress-fill" id="pfill"></div></div>
+</header>
 
-  <div class="sprout" id="sprout"></div>
+<main id="app">
 
-  <form class="card" id="surveyForm" novalidate>
-    <!-- Step 0: Thông tin cá nhân -->
-    <div class="step active" data-step="0">
-      <h2 class="step-title">Thông tin cá nhân</h2>
-      <p class="step-sub">Vài thông tin cơ bản để bắt đầu.</p>
+<!-- BƯỚC 0 : THÔNG TIN -->
+<section class="step active">
+  <div class="card">
+    <h2>Khảo Sát Tinh Thần Học Sinh</h2>
+    <p class="sub">Dành cho học sinh THCS</p>
+    <div class="note">Không có câu trả lời đúng hay sai — hãy trả lời thật với cảm nhận của bạn. Thông tin chỉ dùng để tìm hiểu và hỗ trợ việc học tốt hơn. Câu trả lời được tự lưu trên máy, không lo mất khi thoát.</div>
+    <div class="field" data-req>
+      <p class="q">Họ và tên</p>
+      <input type="text" name="hoten" placeholder="Nhập họ và tên…">
+    </div>
+    <div class="field" data-req>
+      <p class="q">Giới tính</p>
+      <label class="option"><input type="radio" name="gioitinh" value="Nam"><span class="box"></span><span>Nam</span></label>
+      <label class="option"><input type="radio" name="gioitinh" value="Nữ"><span class="box"></span><span>Nữ</span></label>
+      <label class="option"><input type="radio" name="gioitinh" value="Không muốn nêu"><span class="box"></span><span>Không muốn nêu</span></label>
+    </div>
+    <div class="field" data-req>
+      <p class="q">Lớp</p>
+      <label class="option"><input type="radio" name="lop" value="6"><span class="box"></span><span>Lớp 6</span></label>
+      <label class="option"><input type="radio" name="lop" value="7"><span class="box"></span><span>Lớp 7</span></label>
+      <label class="option"><input type="radio" name="lop" value="8"><span class="box"></span><span>Lớp 8</span></label>
+      <label class="option"><input type="radio" name="lop" value="9"><span class="box"></span><span>Lớp 9</span></label>
+    </div>
+  </div>
+  <div class="nav"><span></span><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+</section>
 
-      <div class="field">
-        <label class="q" for="hoten">Họ và tên</label>
-        <input type="text" id="hoten" name="Họ và tên" required>
-      </div>
-      <div class="field">
-        <label class="q">Giới tính</label>
-        <div class="pillrow">
-          <label class="pill"><input type="radio" name="Giới tính" value="Nam" required><span>Nam</span></label>
-          <label class="pill"><input type="radio" name="Giới tính" value="Nữ"><span>Nữ</span></label>
-        </div>
-      </div>
-      <div class="field">
-        <label class="q" for="lop">Lớp</label>
-        <input type="text" id="lop" name="Lớp" required>
-      </div>
-      <div class="field">
-        <label class="q" for="ngaysinh">Ngày sinh</label>
-        <input type="date" id="ngaysinh" name="Ngày sinh">
+<!-- BƯỚC 1 : VIỆC HỌC -->
+<section class="step">
+  <div class="card">
+    <h2>Về việc học của bạn</h2>
+    <p class="sub">Phần I — thói quen và cảm nhận chung về việc học.</p>
+    <div class="field">
+      <p class="q"><span class="num">1.</span> Bạn thích học những môn nào? <span class="hint">(chọn nhiều)</span></p>
+      <div class="chips">
+        <label class="chip"><input type="checkbox" name="monthich" value="Ngữ văn">Ngữ văn</label>
+        <label class="chip"><input type="checkbox" name="monthich" value="Toán">Toán</label>
+        <label class="chip"><input type="checkbox" name="monthich" value="Tiếng Anh">Tiếng Anh</label>
+        <label class="chip"><input type="checkbox" name="monthich" value="KHTN">KHTN</label>
+        <label class="chip"><input type="checkbox" name="monthich" value="Lịch sử - Địa lý">Lịch sử – Địa lý</label>
+        <label class="chip"><input type="checkbox" name="monthich" value="Tin học">Tin học</label>
+        <label class="chip"><input type="checkbox" name="monthich" value="Thể dục">Thể dục</label>
+        <label class="chip"><input type="checkbox" name="monthich" value="Nghệ thuật">Nghệ thuật</label>
       </div>
     </div>
-
-    <!-- Step 1: 4 câu hỏi cá nhân -->
-    <div class="step" data-step="1">
-      <h2 class="step-title">Về việc học của bạn</h2>
-      <p class="step-sub">Phần I — tiếp theo.</p>
-
-      <div class="field">
-        <label class="q"><span class="num">1.</span>Bạn thích học những môn nào?</label>
-        <textarea name="Môn học yêu thích"></textarea>
-      </div>
-      <div class="field">
-        <label class="q"><span class="num">2.</span>Bạn học bao nhiêu tiếng 1 ngày? Thời gian học có làm bạn áp lực không?</label>
-        <textarea name="Thời gian học và áp lực"></textarea>
-      </div>
-      <div class="field">
-        <label class="q"><span class="num">3.</span>Bạn hãy tự đánh giá kết quả học tập của mình</label>
-        <div class="pillrow">
-          <label class="pill"><input type="radio" name="Tự đánh giá kết quả" value="Tốt"><span>Tốt</span></label>
-          <label class="pill"><input type="radio" name="Tự đánh giá kết quả" value="Khá"><span>Khá</span></label>
-          <label class="pill"><input type="radio" name="Tự đánh giá kết quả" value="Chưa tốt"><span>Chưa tốt</span></label>
-        </div>
-      </div>
-      <div class="field">
-        <label class="q"><span class="num">4.</span>Bạn muốn bản thân cải thiện về kết quả học của môn nào?</label>
-        <textarea name="Môn muốn cải thiện"></textarea>
+    <div class="field">
+      <p class="q"><span class="num">2.</span> Bạn học bao nhiêu tiếng mỗi ngày?</p>
+      <div class="stepper">
+        <button type="button" onclick="bump(-1)">−</button><b id="hoursVal">2 giờ</b><button type="button" onclick="bump(1)">+</button>
+        <input type="hidden" name="hours" id="hours" value="2">
       </div>
     </div>
-
-    <!-- Step 2: Phần 1 -->
-    <div class="step" data-step="2">
-      <h2 class="step-title">Phần 1</h2>
-      <p class="step-sub">Ảnh hưởng của việc học tập đến tinh thần học sinh. 1 = Hoàn toàn không đúng · 2 = Đúng một phần · 3 = Hoàn toàn đúng.</p>
-      <div class="likert-head"><span>1</span><span>2</span><span>3</span></div>
-      <div id="phan1-likert"></div>
-      <div class="field" style="margin-top:20px;">
-        <label class="q">Khi cảm thấy buồn hoặc áp lực vì học tập, bạn thường làm gì để giải tỏa cảm xúc?</label>
-        <textarea name="Cách giải tỏa cảm xúc"></textarea>
+    <div class="field" data-req>
+      <p class="q"><span class="num">3.</span> Thời gian học có làm bạn áp lực không?</p>
+      <label class="option"><input type="radio" name="apluc" value="Không áp lực"><span class="box"></span><span>Không áp lực</span></label>
+      <label class="option"><input type="radio" name="apluc" value="Hơi áp lực"><span class="box"></span><span>Hơi áp lực</span></label>
+      <label class="option"><input type="radio" name="apluc" value="Khá áp lực"><span class="box"></span><span>Khá áp lực</span></label>
+      <label class="option"><input type="radio" name="apluc" value="Rất áp lực"><span class="box"></span><span>Rất áp lực</span></label>
+    </div>
+    <div class="field" data-req>
+      <p class="q"><span class="num">4.</span> Bạn hãy tự đánh giá kết quả học tập của mình</p>
+      <label class="option"><input type="radio" name="tudanhgia" value="Tốt"><span class="box"></span><span>Tốt</span></label>
+      <label class="option"><input type="radio" name="tudanhgia" value="Khá"><span class="box"></span><span>Khá</span></label>
+      <label class="option"><input type="radio" name="tudanhgia" value="Chưa tốt"><span class="box"></span><span>Chưa tốt</span></label>
+    </div>
+    <div class="field">
+      <p class="q"><span class="num">5.</span> Bạn muốn cải thiện kết quả ở môn nào? <span class="hint">(chọn nhiều)</span></p>
+      <div class="chips">
+        <label class="chip"><input type="checkbox" name="moncaithien" value="Ngữ văn">Ngữ văn</label>
+        <label class="chip"><input type="checkbox" name="moncaithien" value="Toán">Toán</label>
+        <label class="chip"><input type="checkbox" name="moncaithien" value="Tiếng Anh">Tiếng Anh</label>
+        <label class="chip"><input type="checkbox" name="moncaithien" value="KHTN">KHTN</label>
+        <label class="chip"><input type="checkbox" name="moncaithien" value="Lịch sử - Địa lý">Lịch sử – Địa lý</label>
+        <label class="chip"><input type="checkbox" name="moncaithien" value="Tin học">Tin học</label>
       </div>
     </div>
+  </div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+</section>
 
-    <!-- Step 3: Phần 2 -->
-    <div class="step" data-step="3">
-      <h2 class="step-title">Phần 2</h2>
-      <p class="step-sub">Kết quả học tập ảnh hưởng đến cá nhân, gia đình và thầy cô.</p>
-      <div class="likert-head"><span>1</span><span>2</span><span>3</span></div>
-      <div id="phan2-likert"></div>
+<!-- BƯỚC 2 : TINH THẦN (thang 1-3) -->
+<section class="step">
+  <div class="card">
+    <h2>Phần 1 — Tinh thần & việc học</h2>
+    <p class="sub">Ảnh hưởng của việc học tập đến tinh thần học sinh.</p>
+    <div class="legend">1 = Hoàn toàn không đúng · 2 = Đúng một phần · 3 = Hoàn toàn đúng</div>
+    <div class="scale-head"><span></span><span>1</span><span>2</span><span>3</span></div>
+    <div class="scale-row field" data-req><p>Bạn cảm thấy bản thân vô dụng khi điểm thấp.</p><label class="sc"><input type="radio" name="s1" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s1" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s1" value="3"><span class="dot"></span></label></div>
+    <div class="scale-row field" data-req><p>Bạn căng thẳng vì việc học.</p><label class="sc"><input type="radio" name="s2" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s2" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s2" value="3"><span class="dot"></span></label></div>
+    <div class="scale-row field" data-req><p>Bạn và ba mẹ bất đồng về phương pháp học (cách học, lịch học, cách ôn bài…).</p><label class="sc"><input type="radio" name="s3" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s3" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s3" value="3"><span class="dot"></span></label></div>
+    <div class="scale-row field" data-req><p>Bạn và ba mẹ xảy ra căng thẳng khi điểm số không như mong đợi.</p><label class="sc"><input type="radio" name="s4" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s4" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s4" value="3"><span class="dot"></span></label></div>
+    <div class="scale-row field" data-req><p>Bạn và ba mẹ bất đồng về thời gian dành cho việc học và nghỉ ngơi/giải trí.</p><label class="sc"><input type="radio" name="s5" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s5" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s5" value="3"><span class="dot"></span></label></div>
+    <div class="scale-row field" data-req><p>Bạn cảm thấy các tiết học dần trở nên nhàm chán.</p><label class="sc"><input type="radio" name="s6" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s6" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s6" value="3"><span class="dot"></span></label></div>
+    <div class="scale-row field" data-req><p>Bạn muốn điểm cao để được người khác công nhận.</p><label class="sc"><input type="radio" name="s7" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s7" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s7" value="3"><span class="dot"></span></label></div>
+    <div class="scale-row field" data-req><p>Bạn vẫn tiếp tục học mặc dù bản thân rất mệt.</p><label class="sc"><input type="radio" name="s8" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s8" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s8" value="3"><span class="dot"></span></label></div>
+    <div class="scale-row field" data-req><p>Bạn thấy bản thân không có thời gian nghỉ ngơi.</p><label class="sc"><input type="radio" name="s9" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s9" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s9" value="3"><span class="dot"></span></label></div>
+    <div class="scale-row field" data-req><p>Bạn hay khóc khi đã cố gắng học nhưng kết quả không như ý.</p><label class="sc"><input type="radio" name="s10" value="1"><span class="dot"></span></label><label class="sc"><input type="radio" name="s10" value="2"><span class="dot"></span></label><label class="sc"><input type="radio" name="s10" value="3"><span class="dot"></span></label></div>
+    <div class="field">
+      <p class="q">Khi cảm thấy buồn hoặc áp lực vì học tập, bạn thường làm gì để giải tỏa cảm xúc? <span class="hint">(không bắt buộc)</span></p>
+      <textarea name="giaitoa" rows="3" placeholder="Ví dụ: nghe nhạc, tâm sự với bạn, đi bộ…"></textarea>
+    </div>
+  </div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+</section>
 
-      <div class="field" style="margin-top:20px;">
-        <label class="q">Khi kết quả học tập không như mong đợi trong một thời gian dài, cảm xúc và thái độ học tập của bạn thay đổi như thế nào?</label>
-        <textarea name="Thay đổi cảm xúc thái độ"></textarea>
-      </div>
-      <div class="field">
-        <label class="q">Kết quả học tập ảnh hưởng như thế nào đến mối quan hệ giữa bạn với ba mẹ?</label>
-        <div class="choice-list" id="quanhe-bame"></div>
-      </div>
-      <div class="field">
-        <label class="q">Kết quả học tập ảnh hưởng như thế nào đến mối quan hệ giữa bạn với thầy cô?</label>
-        <div class="choice-list" id="quanhe-thayco"></div>
+<!-- BƯỚC 3 : ẢNH HƯỞNG KẾT QUẢ -->
+<section class="step">
+  <div class="card">
+    <h2>Phần 2 — Kết quả & các mối quan hệ</h2>
+    <p class="sub">Kết quả học tập ảnh hưởng đến cá nhân, gia đình và thầy cô.</p>
+    <div class="note">Hãy trả lời theo trải nghiệm thật của bạn — không có câu trả lời đúng hay sai.</div>
+    <div class="field">
+      <p class="q">Khi kết quả học tập không như mong đợi trong một thời gian dài, cảm xúc và thái độ học tập của bạn thay đổi như thế nào? <span class="hint">(không bắt buộc)</span></p>
+      <textarea name="kq_daidien" rows="3" placeholder="Chia sẻ cảm xúc, thái độ của bạn…"></textarea>
+    </div>
+    <div class="field" data-req>
+      <p class="q">Khi kết quả học tập TỐT, mối quan hệ giữa bạn với ba mẹ thay đổi như thế nào?</p>
+      <label class="option"><input type="radio" name="bame_tot" value="Tích cực hơn"><span class="box"></span><span>Tích cực hơn – ba mẹ vui vẻ, khen ngợi, gần gũi hơn</span></label>
+      <label class="option"><input type="radio" name="bame_tot" value="Không thay đổi"><span class="box"></span><span>Không thay đổi nhiều</span></label>
+      <label class="option"><input type="radio" name="bame_tot" value="Áp lực giữ thành tích"><span class="box"></span><span>Ba mẹ kỳ vọng cao hơn, tạo áp lực phải giữ thành tích</span></label>
+    </div>
+    <div class="field" data-req>
+      <p class="q">Khi kết quả học tập CHƯA TỐT, mối quan hệ giữa bạn với ba mẹ thay đổi như thế nào?</p>
+      <label class="option"><input type="radio" name="bame_yeu" value="Căng thẳng hơn"><span class="box"></span><span>Căng thẳng hơn – bị trách mắng, nhắc nhở nhiều</span></label>
+      <label class="option"><input type="radio" name="bame_yeu" value="Được động viên"><span class="box"></span><span>Ba mẹ động viên, cùng mình tìm cách cải thiện</span></label>
+      <label class="option"><input type="radio" name="bame_yeu" value="Không thay đổi"><span class="box"></span><span>Không thay đổi nhiều</span></label>
+    </div>
+    <div class="field" data-req>
+      <p class="q">Khi kết quả học tập TỐT, mối quan hệ giữa bạn với thầy cô thay đổi như thế nào?</p>
+      <label class="option"><input type="radio" name="thayco_tot" value="Tích cực hơn"><span class="box"></span><span>Tích cực hơn – thầy cô khen ngợi, tin tưởng, quan tâm hơn</span></label>
+      <label class="option"><input type="radio" name="thayco_tot" value="Không thay đổi"><span class="box"></span><span>Không thay đổi nhiều</span></label>
+      <label class="option"><input type="radio" name="thayco_tot" value="Kỳ vọng hơn"><span class="box"></span><span>Thầy cô kỳ vọng hơn, giao thêm bài/nhiệm vụ</span></label>
+    </div>
+    <div class="field" data-req>
+      <p class="q">Khi kết quả học tập CHƯA TỐT, mối quan hệ giữa bạn với thầy cô thay đổi như thế nào?</p>
+      <label class="option"><input type="radio" name="thayco_yeu" value="Căng thẳng hơn"><span class="box"></span><span>Căng thẳng hơn – thầy cô nghiêm khắc, nhắc nhở nhiều</span></label>
+      <label class="option"><input type="radio" name="thayco_yeu" value="Được động viên"><span class="box"></span><span>Thầy cô động viên, hướng dẫn cách học lại</span></label>
+      <label class="option"><input type="radio" name="thayco_yeu" value="Không thay đổi"><span class="box"></span><span>Không thay đổi nhiều</span></label>
+    </div>
+  </div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+</section>
+
+<!-- BƯỚC 4 : AI -->
+<section class="step">
+  <div class="card">
+    <h2>Phần 3 — AI trong học tập</h2>
+    <p class="sub">Vai trò của AI đối với học sinh trong học tập và giải trí.</p>
+    <div class="field">
+      <p class="q">Bạn thường sử dụng công cụ AI nào để hỗ trợ việc học tập? <span class="hint">(chọn nhiều)</span></p>
+      <div class="chips">
+        <label class="chip"><input type="checkbox" name="aitools" value="ChatGPT">ChatGPT</label>
+        <label class="chip"><input type="checkbox" name="aitools" value="Gemini">Gemini</label>
+        <label class="chip"><input type="checkbox" name="aitools" value="Copilot">Copilot</label>
+        <label class="chip"><input type="checkbox" name="aitools" value="Công cụ AI khác">Công cụ AI khác</label>
+        <label class="chip"><input type="checkbox" name="aitools" value="Không sử dụng" id="noai">Không sử dụng</label>
       </div>
     </div>
-
-    <!-- Step 4: Phần 3 -->
-    <div class="step" data-step="4">
-      <h2 class="step-title">Phần 3</h2>
-      <p class="step-sub">Vai trò của AI đối với học sinh trong học tập và giải trí.</p>
-      <div class="likert-head"><span>1</span><span>2</span><span>3</span></div>
-      <div id="phan3-likert"></div>
-
-      <div class="field" style="margin-top:20px;">
-        <label class="q">Bạn thường sử dụng công cụ AI nào để hỗ trợ việc học tập? AI có giúp ích gì cho việc học của bạn (hãy nêu những lợi ích)?</label>
-        <textarea name="Công cụ AI và lợi ích"></textarea>
-      </div>
-      <div class="field">
-        <label class="q">Trung bình, bạn sử dụng AI khoảng bao nhiêu % khi làm bài tập?</label>
-        <div class="choice-list" id="ai-phantram"></div>
-      </div>
-      <div class="field">
-        <label class="q">Theo bạn, nếu sử dụng 100% AI để làm hoàn toàn thay mình thì có giúp học sinh học giỏi hơn không?</label>
-        <div class="choice-list" id="ai-100phantram"></div>
-      </div>
-      <div class="field">
-        <label class="q">Theo bạn, sử dụng AI như thế nào thì hiệu quả trong học tập?</label>
-        <textarea name="Cách dùng AI hiệu quả"></textarea>
-      </div>
+    <div class="field">
+      <p class="q">AI giúp ích gì cho việc học của bạn? <span class="hint">(không bắt buộc)</span></p>
+      <textarea name="ailoiich" rows="3" placeholder="Ví dụ: giải thích bài khó, tóm tắt tài liệu, luyện tiếng Anh…"></textarea>
     </div>
-
-    <!-- Step 5: Phần 4 -->
-    <div class="step" data-step="5">
-      <h2 class="step-title">Phần 4</h2>
-      <p class="step-sub">Vai trò của việc học hỏi từ các bạn học tốt.</p>
-
-      <div class="field">
-        <label class="q"><span class="num">1.</span>Bạn có mong muốn tìm hiểu những phương pháp học tập hiệu quả được các bạn học sinh có thành tích học tập tốt áp dụng không?</label>
-        <div class="choice-list" id="q4-1"></div>
-      </div>
-      <div class="field">
-        <label class="q"><span class="num">2.</span>Bạn có thường học hỏi, tham khảo cách ghi nhớ bài, lập kế hoạch học tập hoặc giải quyết bài khó từ những bạn học tốt không?</label>
-        <div class="choice-list" id="q4-2"></div>
-      </div>
-      <div class="field">
-        <label class="q"><span class="num">3.</span>Theo bạn, việc chia sẻ "bí quyết học tập" và kinh nghiệm thực tế từ những học sinh học tốt có thể giúp các bạn khác cải thiện kết quả học tập không?</label>
-        <div class="choice-list" id="q4-3"></div>
-      </div>
-      <div class="field">
-        <label class="q"><span class="num">4.</span>Nếu có một mô hình/ứng dụng giúp học sinh chia sẻ phương pháp học tập, mẹo ghi nhớ, cách quản lý thời gian và kinh nghiệm ôn thi, bạn có sẵn sàng tham gia không?</label>
-        <div class="choice-list" id="q4-4"></div>
-      </div>
-      <div class="field">
-        <label class="q"><span class="num">5.</span>Bạn muốn học hỏi điều gì nhất từ những bạn có phương pháp học tập hiệu quả?</label>
-        <div class="choice-list" id="q4-5"></div>
-        <input type="text" style="margin-top:8px;" placeholder="Khác (nếu có)..." name="Khác - điều muốn học hỏi">
-      </div>
-      <div class="field">
-        <label class="q">Là một học sinh THCS, bạn nghĩ mình cần chủ động học tập và ứng dụng AI như thế nào để đạt hiệu quả tốt nhất?</label>
-        <textarea name="Chủ động học tập và AI"></textarea>
-      </div>
-      <div class="field">
-        <label class="q">Bạn muốn thay đổi điều gì trong quá trình học tập để việc học trở nên nhẹ nhàng và hiệu quả hơn?</label>
-        <textarea name="Điều muốn thay đổi"></textarea>
-      </div>
+    <div class="field">
+      <p class="q">Trung bình, bạn sử dụng AI khoảng bao nhiêu % khi làm bài tập? → <span class="range-out" id="pctOut">20%</span></p>
+      <input type="range" name="aipct" id="pct" min="0" max="100" step="5" value="20">
     </div>
-
-    <!-- Step 6: Xác nhận -->
-    <div class="step" data-step="6">
-      <div class="done-screen" id="preSubmit">
-        <h2 class="step-title" style="text-align:center;">Sẵn sàng gửi khảo sát</h2>
-        <p class="step-sub" style="text-align:center;">Bạn đã hoàn thành tất cả các phần. Nhấn "Gửi khảo sát" để hoàn tất — cảm ơn bạn đã dành thời gian chia sẻ thật lòng!</p>
-      </div>
-      <div class="done-screen" id="afterSubmit" style="display:none;">
-        <svg class="sprout-big" viewBox="0 0 64 64" fill="none"><path d="M32 58V30" stroke="#4F7A63" stroke-width="3" stroke-linecap="round"/><path d="M32 30C32 30 14 30 14 14C30 14 32 30 32 30Z" fill="#4F7A63"/><path d="M32 22C32 22 50 22 50 8C36 8 32 22 32 22Z" fill="#DFA13B"/></svg>
-        <h2>Đã gửi thành công!</h2>
-        <p>Cảm ơn bạn đã làm bài khảo sát. Câu trả lời của bạn đã được ghi nhận.</p>
-      </div>
-      <div class="error-box" id="errorBox" style="display:none;"></div>
+    <div class="field" data-req>
+      <p class="q">Theo bạn, dùng 100% AI để làm bài thay mình có giúp học sinh học giỏi hơn không?</p>
+      <label class="option"><input type="radio" name="ai100" value="Có"><span class="box"></span><span>Có</span></label>
+      <label class="option"><input type="radio" name="ai100" value="Không"><span class="box"></span><span>Không</span></label>
+      <label class="option"><input type="radio" name="ai100" value="Phân vân"><span class="box"></span><span>Còn phân vân</span></label>
     </div>
-
-    <div class="nav">
-      <button type="button" class="btn-ghost" id="btnBack">← Quay lại</button>
-      <button type="button" class="btn-primary" id="btnNext">Tiếp tục →</button>
-      <button type="submit" class="btn-primary" id="btnSubmit" style="display:none;">Gửi khảo sát</button>
+    <div class="field">
+      <p class="q">Theo bạn, sử dụng AI như thế nào thì hiệu quả trong học tập? <span class="hint">(không bắt buộc)</span></p>
+      <textarea name="aihieuqua" rows="3" placeholder="Chia sẻ ý kiến của bạn…"></textarea>
     </div>
-  </form>
-  <p class="note">Hết! Cảm ơn vì đã làm bài khảo sát 🌱</p>
-</div>
+  </div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+</section>
+
+<!-- BƯỚC 5 : HỌC HỎI TỪ BẠN -->
+<section class="step">
+  <div class="card">
+    <h2>Phần 4 — Học hỏi từ bạn học tốt</h2>
+    <p class="sub">Vai trò của việc học hỏi từ các bạn có thành tích tốt.</p>
+    <div class="field" data-req>
+      <p class="q"><span class="num">1.</span> Bạn có mong muốn tìm hiểu phương pháp học tập hiệu quả từ các bạn học tốt không?</p>
+      <label class="option"><input type="radio" name="h1" value="Rất mong muốn"><span class="box"></span><span>Rất mong muốn</span></label>
+      <label class="option"><input type="radio" name="h1" value="Bình thường"><span class="box"></span><span>Bình thường</span></label>
+      <label class="option"><input type="radio" name="h1" value="Không quan tâm"><span class="box"></span><span>Không quan tâm</span></label>
+    </div>
+    <div class="field" data-req>
+      <p class="q"><span class="num">2.</span> Bạn có thường học hỏi cách ghi nhớ, lập kế hoạch hoặc giải bài khó từ các bạn học tốt không?</p>
+      <label class="option"><input type="radio" name="h2" value="Thường xuyên"><span class="box"></span><span>Thường xuyên</span></label>
+      <label class="option"><input type="radio" name="h2" value="Thỉnh thoảng"><span class="box"></span><span>Thỉnh thoảng</span></label>
+      <label class="option"><input type="radio" name="h2" value="Hiếm khi"><span class="box"></span><span>Hiếm khi</span></label>
+      <label class="option"><input type="radio" name="h2" value="Không"><span class="box"></span><span>Không</span></label>
+    </div>
+    <div class="field" data-req>
+      <p class="q"><span class="num">3.</span> Việc chia sẻ "bí quyết học tập" từ học sinh học tốt có giúp các bạn khác cải thiện kết quả không?</p>
+      <label class="option"><input type="radio" name="h3" value="Giúp ích nhiều"><span class="box"></span><span>Có, giúp ích nhiều</span></label>
+      <label class="option"><input type="radio" name="h3" value="Giúp một phần"><span class="box"></span><span>Có, một phần</span></label>
+      <label class="option"><input type="radio" name="h3" value="Không"><span class="box"></span><span>Không</span></label>
+    </div>
+    <div class="field" data-req>
+      <p class="q"><span class="num">4.</span> Nếu có ứng dụng chia sẻ phương pháp học, mẹo ghi nhớ, quản lý thời gian, kinh nghiệm ôn thi — bạn có sẵn sàng tham gia không?</p>
+      <label class="option"><input type="radio" name="h4" value="Sẵn sàng"><span class="box"></span><span>Sẵn sàng</span></label>
+      <label class="option"><input type="radio" name="h4" value="Còn phân vân"><span class="box"></span><span>Còn phân vân</span></label>
+      <label class="option"><input type="radio" name="h4" value="Không muốn tham gia"><span class="box"></span><span>Không muốn tham gia</span></label>
+    </div>
+    <div class="field">
+      <p class="q"><span class="num">5.</span> Bạn muốn học hỏi điều gì từ những bạn có phương pháp học hiệu quả? <span class="hint">(chọn nhiều đáp án)</span></p>
+      <label class="option"><input type="checkbox" name="h5" value="Cách lập kế hoạch và quản lý thời gian"><span class="box"></span><span>Cách lập kế hoạch và quản lý thời gian</span></label>
+      <label class="option"><input type="checkbox" name="h5" value="Cách ghi nhớ kiến thức"><span class="box"></span><span>Cách ghi nhớ kiến thức</span></label>
+      <label class="option"><input type="checkbox" name="h5" value="Cách tự học"><span class="box"></span><span>Cách tự học</span></label>
+      <label class="option"><input type="checkbox" name="h5" value="Cách ôn tập trước kiểm tra/thi"><span class="box"></span><span>Cách ôn tập trước kiểm tra/thi</span></label>
+      <label class="option"><input type="checkbox" name="h5" value="Cách vượt qua môn học khó"><span class="box"></span><span>Cách vượt qua môn học khó</span></label>
+      <label class="option"><input type="checkbox" name="h5" value="Cách dùng AI/công nghệ hỗ trợ học tập"><span class="box"></span><span>Cách sử dụng AI/công nghệ để hỗ trợ học tập</span></label>
+      <label class="option"><input type="checkbox" name="h5" value="Khác"><span class="box"></span><span>Khác…</span></label>
+      <input type="text" name="h5_khac" placeholder="Khác (nếu có)…" style="margin-top:8px">
+    </div>
+    <div class="field">
+      <p class="q">Là học sinh THCS, bạn nghĩ mình cần chủ động học tập và ứng dụng AI thế nào để đạt hiệu quả tốt nhất? <span class="hint">(không bắt buộc)</span></p>
+      <textarea name="open_ai" rows="3"></textarea>
+    </div>
+    <div class="field">
+      <p class="q">Bạn muốn thay đổi điều gì để việc học nhẹ nhàng và hiệu quả hơn? <span class="hint">(không bắt buộc)</span></p>
+      <textarea name="open_thaydoi" rows="3"></textarea>
+    </div>
+  </div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+</section>
+
+<!-- BƯỚC 6 : GỬI -->
+<section class="step">
+  <div class="card" style="text-align:center">
+    <h2>Sẵn sàng gửi khảo sát</h2>
+    <p class="sub">Bạn đã đi đến bước cuối! Nhấn "Gửi khảo sát" để hoàn tất — cảm ơn bạn đã dành thời gian chia sẻ thật lòng! 🌱</p>
+    <button class="btn-primary" onclick="submit()">Gửi khảo sát</button>
+  </div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><span></span></div>
+  <p class="endnote">Hết! Cảm ơn vì đã làm bài khảo sát 🌱</p>
+</section>
+
+<!-- THÀNH CÔNG -->
+<section id="success" class="card">
+  <h2>Đã gửi thành công! 🎉</h2>
+  <p class="sub">Cảm ơn bạn đã làm bài khảo sát. Câu trả lời của bạn đã được ghi nhận.</p>
+  <button class="btn-primary" onclick="copyAnswers()">Sao lưu câu trả lời</button>
+</section>
+
+</main>
+<div id="toast"></div>
 
 <script>
-/* ============ CONFIG ============ */
-// Kết quả khảo sát sẽ được gửi đến: nguyenphuc17122011@gmail.com
-// LƯU Ý QUAN TRỌNG: lần ĐẦU TIÊN có người nộp bài, Formspree sẽ gửi 1 email
-// xác nhận đến nguyenphuc17122011@gmail.com — cần mở email đó và bấm "Confirm"
-// thì các lượt nộp sau mới tự động vào hộp thư. Trước khi xác nhận, bấm "Gửi
-// khảo sát" cũng sẽ báo thành công nhưng email sẽ không tới cho đến khi xác nhận.
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xppabzep";
-/* ================================================================= */
+const KEY='kshs_v3';
+const steps=[...document.querySelectorAll('.step')];
+let cur=0;
+const $=s=>document.querySelector(s);
 
-const LIKERT_LABEL = "1 = Hoàn toàn không đúng · 2 = Đúng một phần · 3 = Hoàn toàn đúng";
-
-const phan1Items = [
-  "Bạn cảm thấy bản thân vô dụng khi điểm thấp.",
-  "Bạn căng thẳng vì việc học.",
-  "Bạn hay bất đồng với ba mẹ về vấn đề học tập.",
-  "Bạn cảm thấy các tiết học dần trở nên nhàm chán.",
-  "Bạn muốn điểm cao để được người khác công nhận.",
-  "Bạn vẫn tiếp tục học mặc dù bản thân rất mệt.",
-  "Bạn thấy bản thân không có thời gian nghỉ ngơi.",
-  "Bạn hay khóc khi đã cố gắng học nhưng kết quả kiểm tra thấp hơn mong đợi.",
-  "Bạn cảm thấy mình kém cỏi khi kết quả học tập không như mong đợi.",
-  "Bạn khó có thể thư giãn sau mỗi buổi học.",
-  "Bạn muốn có người tâm sự, lắng nghe khi gặp áp lực học tập."
-];
-const phan2Items = ["Bạn nghĩ điểm số thể hiện được giá trị của bản thân."];
-const phan3Items = [
-  "Bạn cảm thấy thích thú khi sử dụng các công cụ trí tuệ nhân tạo AI trong học tập.",
-  "Bạn thường dùng các trò chơi của trí tuệ nhân tạo AI để thư giãn.",
-  "Bạn đã dần quen sử dụng AI trong cuộc sống hằng ngày.",
-  "Bạn sử dụng AI để cập nhật các tin tức.",
-  "AI giúp việc học của bạn trở nên hiệu quả hơn."
-];
-
-function renderLikert(containerId, items, namePrefix){
-  const el = document.getElementById(containerId);
-  el.innerHTML = items.map((text, i) => `
-    <div class="likert-row">
-      <div class="likert-text">${text}</div>
-      <div class="likert-opts">
-        ${[1,2,3].map(v => `
-          <div class="likert-opt">
-            <label>
-              <input type="radio" name="${namePrefix} - Câu ${i+1}" value="${v}">
-              <span class="dot"></span>
-            </label>
-          </div>`).join('')}
-      </div>
-    </div>`).join('');
+function show(i){
+  cur=Math.max(0,Math.min(steps.length-1,i));
+  steps.forEach((s,k)=>s.classList.toggle('active',k===cur));
+  $('#pfill').style.width=(cur/(steps.length-1)*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
-renderLikert('phan1-likert', phan1Items, 'Phần 1');
-renderLikert('phan2-likert', phan2Items, 'Phần 2');
-renderLikert('phan3-likert', phan3Items, 'Phần 3');
+function next(){ if(validStep(steps[cur])) show(cur+1); }
+function prev(){ show(cur-1); }
 
-function renderChoices(containerId, name, options){
-  const el = document.getElementById(containerId);
-  el.innerHTML = options.map((opt, i) => `
-    <div class="choice">
-      <input type="radio" name="${name}" value="${opt}" id="${containerId}-${i}">
-      <label for="${containerId}-${i}"><span class="box"></span>${opt}</label>
-    </div>`).join('');
-}
-renderChoices('quanhe-bame', 'Ảnh hưởng đến quan hệ với ba mẹ', ["Tích cực hơn","Không thay đổi","Căng thẳng hơn"]);
-renderChoices('quanhe-thayco', 'Ảnh hưởng đến quan hệ với thầy cô', ["Tích cực hơn","Không thay đổi","Căng thẳng hơn"]);
-renderChoices('ai-phantram', '% dùng AI khi làm bài tập', ["Dưới 25%","25% - 50%","50% - 75%","Trên 75%"]);
-renderChoices('ai-100phantram', 'Dùng 100% AI có giúp học giỏi hơn', ["Có","Không","Không chắc chắn"]);
-renderChoices('q4-1', 'Muốn tìm hiểu phương pháp học từ bạn giỏi', ["Rất muốn","Muốn","Bình thường","Không muốn"]);
-renderChoices('q4-2', 'Tần suất tham khảo cách học từ bạn giỏi', ["Thường xuyên","Thỉnh thoảng","Hiếm khi","Chưa bao giờ"]);
-renderChoices('q4-3', 'Hiệu quả của chia sẻ bí quyết học tập', ["Rất hiệu quả","Khá hiệu quả","Ít hiệu quả","Không hiệu quả"]);
-renderChoices('q4-4', 'Sẵn sàng tham gia mô hình chia sẻ học tập', ["Rất sẵn sàng","Sẵn sàng","Còn phân vân","Không muốn tham gia"]);
-renderChoices('q4-5', 'Điều muốn học hỏi nhất', ["Cách lập kế hoạch và quản lý thời gian","Cách ghi nhớ kiến thức","Cách tự học","Cách ôn tập trước kiểm tra/thi","Cách vượt qua môn học khó","Cách sử dụng AI/công nghệ để hỗ trợ học tập"]);
-
-/* ---------- Wizard logic ---------- */
-const steps = Array.from(document.querySelectorAll('.step'));
-let current = 0;
-const sproutEl = document.getElementById('sprout');
-sproutEl.innerHTML = steps.map((_,i) => `<div class="leaf" data-i="${i}"></div>`).join('');
-const leaves = Array.from(sproutEl.querySelectorAll('.leaf'));
-
-function updateSprout(){
-  leaves.forEach((l,i) => {
-    l.classList.toggle('done', i < current);
-    l.classList.toggle('current', i === current);
+function validStep(step){
+  let first=null;
+  step.querySelectorAll('.field[data-req]').forEach(f=>{
+    const ins=[...f.querySelectorAll('input,textarea')].filter(i=>i.type!=='hidden');
+    let ok=true;
+    if(ins.length){
+      if(ins.some(i=>i.type==='radio'||i.type==='checkbox')) ok=ins.some(i=>i.checked);
+      else ok=ins.some(i=>i.value.trim()!=='');
+    }
+    f.classList.toggle('missing',!ok);
+    if(!ok&&!first)first=f;
   });
+  if(first){ first.scrollIntoView({behavior:'smooth',block:'center'}); toast('Bạn vui lòng trả lời các câu bắt buộc còn thiếu nhé 🌱'); }
+  return !first;
 }
-function showStep(i){
-  steps.forEach(s => s.classList.toggle('active', Number(s.dataset.step) === i));
-  document.getElementById('btnBack').style.visibility = i === 0 ? 'hidden' : 'visible';
-  document.getElementById('btnNext').style.display = i === steps.length - 1 ? 'none' : 'inline-block';
-  document.getElementById('btnSubmit').style.display = i === steps.length - 1 ? 'inline-block' : 'none';
-  updateSprout();
-  document.getElementById('surveyForm').scrollIntoView({behavior:'smooth', block:'start'});
+
+function sync(){
+  document.querySelectorAll('label.option,label.chip').forEach(l=>{
+    const i=l.querySelector('input'); l.classList.toggle('selected',i.checked);
+  });
+  $('#hoursVal').textContent=$('#hours').value+' giờ';
+  $('#pctOut').textContent=$('#pct').value+'%';
 }
-document.getElementById('btnNext').addEventListener('click', () => {
-  if(current === 0){
-    const name = document.getElementById('hoten').value.trim();
-    const lop = document.getElementById('lop').value.trim();
-    if(!name || !lop){
-      alert('Vui lòng nhập họ tên và lớp trước khi tiếp tục.');
-      return;
-    }
+function save(){ localStorage.setItem(KEY,JSON.stringify(collect())); }
+function collect(){
+  const d={};
+  document.querySelectorAll('#app [name]').forEach(el=>{
+    const n=el.name;
+    if(el.type==='radio'){ if(el.checked)d[n]=el.value; }
+    else if(el.type==='checkbox'){ if(el.checked){(d[n]=d[n]||[]).push(el.value);} }
+    else d[n]=el.value;
+  });
+  return d;
+}
+function bump(v){
+  const h=$('#hours'); h.value=Math.max(0,Math.min(12,+h.value+v)); sync(); save();
+}
+function toast(m){
+  const t=$('#toast'); t.textContent=m; t.classList.add('show');
+  clearTimeout(t._x); t._x=setTimeout(()=>t.classList.remove('show'),2600);
+}
+function submit(){
+  for(let i=0;i<steps.length;i++){
+    if(!validStep(steps[i])){ show(i); return; }
   }
-  if(current < steps.length - 1){ current++; showStep(current); }
+  save();
+  steps.forEach(s=>s.classList.remove('active'));
+  $('#success').classList.add('show');
+  window.scrollTo({top:0});
+}
+function copyAnswers(){
+  const txt=JSON.stringify(collect(),null,2);
+  (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(
+    ()=>toast('Đã sao lưu câu trả lời ✔'),
+    ()=>{ prompt('Copy câu trả lời bên dưới:',txt); }
+  );
+}
+
+$('#app').addEventListener('change',e=>{
+  // "Không sử dụng" AI loại bỏ các lựa chọn khác
+  if(e.target.id==='noai'&&e.target.checked){
+    document.querySelectorAll('[name=aitools]').forEach(i=>{ if(i.id!=='noai')i.checked=false; });
+  }else if(e.target.name==='aitools'&&e.target.checked){ $('#noai').checked=false; }
+  const f=e.target.closest('.field'); if(f&&f.classList.contains('missing')) validStep(f.closest('.step'));
+  sync(); save();
 });
-document.getElementById('btnBack').addEventListener('click', () => {
-  if(current > 0){ current--; showStep(current); }
-});
-showStep(0);
+$('#app').addEventListener('input',()=>{ sync(); save(); });
 
-/* ---------- Submit ---------- */
-document.getElementById('surveyForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const errorBox = document.getElementById('errorBox');
-  errorBox.style.display = 'none';
-  const submitBtn = document.getElementById('btnSubmit');
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Đang gửi...';
-
-  const formData = new FormData(document.getElementById('surveyForm'));
-  formData.append('_subject', 'Kết quả Khảo Sát Tinh Thần Học Sinh - ' + (formData.get('Họ và tên') || ''));
-
-  try{
-    if(!FORMSPREE_ENDPOINT || FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID')){
-      throw new Error('CHUA_CAU_HINH');
-    }
-    const res = await fetch(FORMSPREE_ENDPOINT, {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: formData
-    });
-    if(!res.ok) throw new Error('LOI_GUI');
-
-    document.getElementById('preSubmit').style.display = 'none';
-    document.getElementById('afterSubmit').style.display = 'block';
-    document.querySelector('.nav').style.display = 'none';
-  }catch(err){
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Gửi khảo sát';
-    if(err.message === 'CHUA_CAU_HINH'){
-      errorBox.textContent = 'Trang khảo sát chưa được kết nối với email — người tạo khảo sát cần dán "Form endpoint" từ Formspree vào FORMSPREE_ENDPOINT trong mã nguồn.';
-    } else {
-      errorBox.textContent = 'Có lỗi khi gửi khảo sát. Vui lòng kiểm tra kết nối mạng và thử lại.';
-    }
-    errorBox.style.display = 'block';
-  }
-});
+// khôi phục dữ liệu đã lưu
+try{
+  const d=JSON.parse(localStorage.getItem(KEY)||'null');
+  if(d){ document.querySelectorAll('#app [name]').forEach(el=>{
+    const v=d[el.name];
+    if(el.type==='radio')el.checked=v===el.value;
+    else if(el.type==='checkbox')el.checked=(v||[]).includes(el.value);
+    else if(v!==undefined)el.value=v;
+  });}
+}catch(e){}
+sync(); show(0);
 </script>
 </body>
 </html>
