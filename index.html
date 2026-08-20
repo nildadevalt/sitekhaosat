@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#f7f8f5">
 <title>Khảo Sát Tinh Thần Học Sinh</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <style>
 :root{
   --green:#4d7a5e; --green-dark:#3d6350; --bg:#eef1ea; --card:#fbfcf9;
@@ -14,10 +15,12 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+.material-icons{font-size:20px;line-height:1;vertical-align:middle}
 header{position:sticky;top:0;z-index:30}
 .topbar{height:56px;background:#f7f8f5ee;backdrop-filter:blur(8px);display:flex;align-items:center;gap:10px;padding:0 14px;border-bottom:1px solid var(--border)}
 .topbar h1{flex:1;text-align:center;font-size:18px;margin:0}
-.icon-btn{background:none;border:none;font-size:26px;color:var(--text);cursor:pointer;padding:4px 8px}
+.icon-btn{background:none;border:none;color:var(--text);cursor:pointer;padding:4px 8px;display:flex}
+.icon-btn .material-icons{font-size:24px}
 .progress{height:6px;background:#dfe5da}
 .progress-fill{height:100%;width:0;background:var(--green);transition:.3s}
 main{max-width:760px;margin:0 auto;padding:0 12px 40px}
@@ -60,22 +63,25 @@ textarea:focus,input[type=text]:focus{outline:2px solid var(--green);border-colo
 input[type=range]{width:100%;accent-color:var(--green)}
 .range-out{font-weight:700;color:var(--green-dark)}
 .nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:20px 0 4px}
-.btn-primary{background:var(--green);color:#fff;border:none;border-radius:999px;padding:15px 28px;font-size:16px;font-weight:700;cursor:pointer}
+.btn-primary{background:var(--green);color:#fff;border:none;border-radius:999px;padding:15px 28px;font-size:16px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
 .btn-primary:active{background:var(--green-dark)}
-.btn-ghost{background:none;border:none;color:var(--muted);font-weight:600;font-size:15px;cursor:pointer;padding:10px}
+.btn-ghost{background:none;border:none;color:var(--muted);font-weight:600;font-size:15px;cursor:pointer;padding:10px;display:inline-flex;align-items:center;gap:6px}
 #toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--green-dark);color:#fff;padding:12px 18px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:.3s;z-index:99;max-width:86vw;text-align:center}
 #toast.show{opacity:1}
 .endnote{text-align:center;color:var(--muted);padding:18px 0 8px}
+.endnote .material-icons{font-size:16px;color:var(--green);vertical-align:-3px}
 #success{display:none;text-align:center;padding:40px 20px}
 #success.show{display:block}
-#success .btn-primary{margin:4px}
+.success-icon{font-size:56px;color:var(--green);display:block;margin:0 auto 8px}
 .backdrop{position:fixed;inset:0;z-index:40;display:none}
 .backdrop.show{display:block}
-.menu{position:fixed;top:60px;right:12px;z-index:50;display:none;min-width:230px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 10px 28px #0003;overflow:hidden}
+.menu{position:fixed;top:60px;right:12px;z-index:50;display:none;min-width:240px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 10px 28px #0003;overflow:hidden}
 .menu.open{display:block}
-.menu button{display:block;width:100%;text-align:left;padding:13px 16px;background:none;border:none;font:inherit;font-size:14.5px;color:var(--text);cursor:pointer}
+.menu button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 16px;background:none;border:none;font:inherit;font-size:14.5px;color:var(--text);cursor:pointer}
 .menu button:active{background:var(--tile)}
+.menu .material-icons{font-size:20px;color:var(--green-dark)}
 .menu button.danger{color:var(--danger)}
+.menu button.danger .material-icons{color:var(--danger)}
 .modal{position:fixed;inset:0;z-index:60;background:#0006;display:none;align-items:center;justify-content:center;padding:20px}
 .modal.show{display:flex}
 .modal-card{background:#fff;border-radius:18px;padding:20px;max-width:340px;width:100%;font-size:15px;line-height:1.55}
@@ -85,9 +91,9 @@ input[type=range]{width:100%;accent-color:var(--green)}
 <body>
 <header>
   <div class="topbar">
-    <button class="icon-btn" onclick="prev()" aria-label="Quay lại">‹</button>
+    <button class="icon-btn" onclick="prev()" aria-label="Quay lại"><span class="material-icons">arrow_back_ios</span></button>
     <h1>Khảo Sát Tinh Thần Học Sinh</h1>
-    <button class="icon-btn" id="menuBtn" aria-label="Menu">•••</button>
+    <button class="icon-btn" id="menuBtn" aria-label="Menu"><span class="material-icons">more_vert</span></button>
   </div>
   <div class="progress"><div class="progress-fill" id="pfill"></div></div>
 </header>
@@ -118,7 +124,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
       <label class="option"><input type="radio" name="lop" value="9"><span class="box"></span><span>Lớp 9</span></label>
     </div>
   </div>
-  <div class="nav"><span></span><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+  <div class="nav"><span></span><button class="btn-primary" onclick="next()">Tiếp tục <span class="material-icons">arrow_forward</span></button></div>
 </section>
 
 <!-- BƯỚC 1 : VIỆC HỌC -->
@@ -171,7 +177,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
       </div>
     </div>
   </div>
-  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()"><span class="material-icons">arrow_back</span> Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục <span class="material-icons">arrow_forward</span></button></div>
 </section>
 
 <!-- BƯỚC 2 : TINH THẦN (thang 1-3) -->
@@ -196,7 +202,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
       <textarea name="giaitoa" rows="3" placeholder="Ví dụ: nghe nhạc, tâm sự với bạn, đi bộ…"></textarea>
     </div>
   </div>
-  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()"><span class="material-icons">arrow_back</span> Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục <span class="material-icons">arrow_forward</span></button></div>
 </section>
 
 <!-- BƯỚC 3 : ẢNH HƯỞNG KẾT QUẢ -->
@@ -234,7 +240,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
       <label class="option"><input type="radio" name="thayco_yeu" value="Không thay đổi"><span class="box"></span><span>Không thay đổi nhiều</span></label>
     </div>
   </div>
-  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()"><span class="material-icons">arrow_back</span> Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục <span class="material-icons">arrow_forward</span></button></div>
 </section>
 
 <!-- BƯỚC 4 : AI -->
@@ -257,7 +263,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
       <textarea name="ailoiich" rows="3" placeholder="Ví dụ: giải thích bài khó, tóm tắt tài liệu, luyện tiếng Anh…"></textarea>
     </div>
     <div class="field">
-      <p class="q">Trung bình, bạn sử dụng AI khoảng bao nhiêu % khi làm bài tập? → <span class="range-out" id="pctOut">20%</span></p>
+      <p class="q">Trung bình, bạn sử dụng AI khoảng bao nhiêu % khi làm bài tập? <span class="range-out" id="pctOut">20%</span></p>
       <input type="range" name="aipct" id="pct" min="0" max="100" step="5" value="20">
     </div>
     <div class="field" data-req>
@@ -271,7 +277,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
       <textarea name="aihieuqua" rows="3" placeholder="Chia sẻ ý kiến của bạn…"></textarea>
     </div>
   </div>
-  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()"><span class="material-icons">arrow_back</span> Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục <span class="material-icons">arrow_forward</span></button></div>
 </section>
 
 <!-- BƯỚC 5 : HỌC HỎI TỪ BẠN -->
@@ -324,36 +330,37 @@ input[type=range]{width:100%;accent-color:var(--green)}
       <textarea name="open_thaydoi" rows="3"></textarea>
     </div>
   </div>
-  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục →</button></div>
+  <div class="nav"><button class="btn-ghost" onclick="prev()"><span class="material-icons">arrow_back</span> Quay lại</button><button class="btn-primary" onclick="next()">Tiếp tục <span class="material-icons">arrow_forward</span></button></div>
 </section>
 
 <!-- BƯỚC 6 : GỬI -->
 <section class="step">
   <div class="card" style="text-align:center">
     <h2>Sẵn sàng gửi khảo sát</h2>
-    <p class="sub">Bạn đã hoàn thành tất cả các phần. Nhấn "Gửi khảo sát" để hoàn tất — cảm ơn bạn đã dành thời gian chia sẻ thật lòng! 🌱</p>
-    <button class="btn-primary" onclick="submit()">Gửi khảo sát</button>
+    <p class="sub">Bạn đã hoàn thành tất cả các phần. Nhấn "Gửi khảo sát" — kết quả sẽ tự động mở trong ứng dụng email để gửi cho thầy cô.</p>
+    <button class="btn-primary" onclick="submit()"><span class="material-icons">send</span> Gửi khảo sát</button>
   </div>
-  <div class="nav"><button class="btn-ghost" onclick="prev()">← Quay lại</button><span></span></div>
-  <p class="endnote">Hết! Cảm ơn vì đã làm bài khảo sát 🌱</p>
+  <div class="nav"><button class="btn-ghost" onclick="prev()"><span class="material-icons">arrow_back</span> Quay lại</button><span></span></div>
+  <p class="endnote">Hết! Cảm ơn vì đã làm bài khảo sát <span class="material-icons">eco</span></p>
 </section>
 
 <!-- THÀNH CÔNG -->
 <section id="success" class="card">
-  <h2>Đã gửi thành công! 🎉</h2>
-  <p class="sub">Cảm ơn bạn đã làm bài khảo sát. Câu trả lời của bạn đã được ghi nhận.<br>Bạn có thể sao lưu hoặc gửi kết quả qua Gmail cho thầy cô.</p>
-  <button class="btn-primary" onclick="copyAnswers()">💾 Sao lưu câu trả lời</button>
-  <button class="btn-primary" onclick="gmailAnswers()">📧 Gửi qua Gmail</button>
+  <span class="material-icons success-icon">check_circle</span>
+  <h2>Đã gửi thành công!</h2>
+  <p class="sub">Cảm ơn bạn đã làm bài khảo sát. Ứng dụng email đã mở với kết quả soạn sẵn — bạn chỉ cần nhấn Send.</p>
+  <button class="btn-primary" onclick="copyAnswers()"><span class="material-icons">save</span> Sao lưu câu trả lời</button>
+  <br>
+  <button class="btn-ghost" onclick="sendEmail()"><span class="material-icons">mail</span> Email chưa mở? Gửi lại tại đây</button>
 </section>
 
 </main>
 
 <div class="backdrop" id="backdrop" onclick="closeMenu()"></div>
 <div class="menu" id="menu">
-  <button onclick="copyAnswers()">💾 Sao lưu câu trả lời</button>
-  <button onclick="gmailAnswers()">📧 Gửi qua Gmail</button>
-  <button onclick="aboutSurvey()">ℹ️ Về khảo sát này</button>
-  <button class="danger" onclick="resetAll()">🔄 Làm lại từ đầu</button>
+  <button onclick="copyAnswers()"><span class="material-icons">save</span> Sao lưu câu trả lời</button>
+  <button onclick="aboutSurvey()"><span class="material-icons">info</span> Về khảo sát này</button>
+  <button class="danger" onclick="resetAll()"><span class="material-icons">refresh</span> Làm lại từ đầu</button>
 </div>
 <div class="modal" id="modal"><div class="modal-card">
   <p id="modalText" style="margin:0 0 16px"></p>
@@ -365,7 +372,7 @@ input[type=range]{width:100%;accent-color:var(--green)}
 <div id="toast"></div>
 
 <script>
-const KEY='kshs_v3';
+const KEY='kshs_v4';
 const steps=[...document.querySelectorAll('.step')];
 let cur=0;
 const $=s=>document.querySelector(s);
@@ -394,7 +401,7 @@ function validStep(step){
     f.classList.toggle('missing',!ok);
     if(!ok&&!first)first=f;
   });
-  if(first){first.scrollIntoView({behavior:'smooth',block:'center'});toast('Bạn vui lòng trả lời các câu bắt buộc còn thiếu nhé 🌱');}
+  if(first){first.scrollIntoView({behavior:'smooth',block:'center'});toast('Bạn vui lòng trả lời các câu bắt buộc còn thiếu nhé');}
   return !first;
 }
 
@@ -424,15 +431,23 @@ function toast(m){
   const t=$('#toast'); t.textContent=m; t.classList.add('show');
   clearTimeout(t._x); t._x=setTimeout(()=>t.classList.remove('show'),2600);
 }
+
+/* ---------- gửi: tự mở email khi hoàn tất ---------- */
+function sendEmail(){
+  const ten=(document.querySelector('[name=hoten]')||{}).value||'';
+  location.href='mailto:?subject='+encodeURIComponent('Kết quả Khảo Sát Tinh Thần Học Sinh — '+ten)
+               +'&body='+encodeURIComponent(readableAnswers());
+}
 function submit(){
   for(let i=0;i<steps.length;i++){ if(!validStep(steps[i])){ show(i); return; } }
   save();
   steps.forEach(s=>s.classList.remove('active'));
   $('#success').classList.add('show');
   window.scrollTo({top:0});
+  sendEmail(); // làm xong là tự mở email gửi kết quả
 }
 
-/* ---------- xuất kết quả dạng chữ (copy / Gmail) ---------- */
+/* ---------- xuất kết quả dạng chữ ---------- */
 const SCALE={'1':'Hoàn toàn không đúng','2':'Đúng một phần','3':'Hoàn toàn đúng'};
 function labelOf(i){
   const l=i.closest('label'); const t=l?l.textContent.trim():'';
@@ -464,19 +479,13 @@ function readableAnswers(){
 function copyAnswers(){
   const txt=readableAnswers();
   (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(
-    ()=>toast('Đã sao lưu câu trả lời ✔'),
+    ()=>toast('Đã sao lưu câu trả lời'),
     ()=>prompt('Copy câu trả lời bên dưới:',txt)
   );
   closeMenu();
 }
-function gmailAnswers(){
-  const ten=(document.querySelector('[name=hoten]')||{}).value||'';
-  location.href='mailto:?subject='+encodeURIComponent('Kết quả Khảo Sát Tinh Thần Học Sinh — '+ten)
-               +'&body='+encodeURIComponent(readableAnswers());
-  closeMenu();
-}
 
-/* ---------- menu ••• & modal ---------- */
+/* ---------- menu & modal ---------- */
 $('#menuBtn').addEventListener('click',()=>{ $('#menu').classList.toggle('open'); $('#backdrop').classList.toggle('show'); });
 function closeMenu(){ $('#menu').classList.remove('open'); $('#backdrop').classList.remove('show'); }
 let modalCb=null;
@@ -489,7 +498,7 @@ function showModal(text,opts={}){
 }
 $('#modalOk').onclick=()=>{ $('#modal').classList.remove('show'); if(modalCb)modalCb(); };
 $('#modalCancel').onclick=()=>$('#modal').classList.remove('show');
-function aboutSurvey(){ showModal('Khảo sát dành cho học sinh THCS. Không có câu trả lời đúng hay sai — thông tin chỉ dùng để tìm hiểu và hỗ trợ việc học tốt hơn. 🌱'); }
+function aboutSurvey(){ showModal('Khảo sát dành cho học sinh THCS. Không có câu trả lời đúng hay sai — thông tin chỉ dùng để tìm hiểu và hỗ trợ việc học tốt hơn.'); }
 function resetAll(){ showModal('Xóa toàn bộ câu trả lời và làm lại từ đầu?',{confirm:true,onOk:()=>{ localStorage.removeItem(KEY); location.reload(); }}); }
 
 /* ---------- lắng nghe thao tác ---------- */
